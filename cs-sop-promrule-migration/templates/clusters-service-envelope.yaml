@@ -1,0 +1,36 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: clusters-service
+  namespace: rhobs-production
+  labels:
+    tenant: hcp
+    prometheus: rhobs
+    role: alert-rules
+  annotations:
+    # Source: app-interface uhc-clusters-service-unified.prometheusrules.yaml.j2
+    # Migrated by: SLSRE-221 CS SOP & PrometheusRule Migration workflow
+    # OTEL dependency: rules will not fire until ocm-rhobs-app-sre-prod-04.yaml MR is merged
+spec:
+  groups:
+    - name: clusters-service.alerts
+      interval: 1m
+      rules: []
+        # Alert rules generated here by transform-rules.sh
+        # Each alert must include:
+        #   labels:
+        #     otel_collect: "true"
+        #     service: clusters-service
+        #   annotations:
+        #     runbook_url: https://github.com/openshift/ops-sop/blob/master/hypershift/alerts/<AlertName>.md
+        # Each alert expr must include:
+        #   and on(_mc_id) (absent(hypershift_cluster_alerts_disabled))
+
+    - name: clusters-service.recording
+      interval: 1m
+      rules: []
+        # Recording rules generated here by transform-rules.sh
+        # Each recording rule must include:
+        #   labels:
+        #     otel_collect: "true"
+        #     service: clusters-service
