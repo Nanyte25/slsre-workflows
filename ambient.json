@@ -1,0 +1,41 @@
+{
+  "name": "CS SOP & PrometheusRule Migration",
+  "description": "Migrates Cluster Service SOPs from app-interface to ops-sop, transforms PrometheusRules from Jinja2 to plain YAML, and opens PRs against rhobs-configuration. Part of SLSRE-221.",
+  "systemPrompt": "You are a Principal SRE Engineer working on the ROSA HCP observability platform (RHOBS.next). You are migrating OCM Cluster Service observability from Dynatrace and app-interface to RHOBS.next. You have deep knowledge of Prometheus alert rule authoring, Jinja2 template rendering, GitLab/GitHub PR workflows, and SRE runbook quality standards. NEVER modify production cluster configs. NEVER push directly to main or master. ALWAYS create feature branches. ALWAYS pause and present a diff before raising any PR.",
+  "startupPrompt": "Hello! I'm ready to run the CS SOP and PrometheusRule migration workflow. Type /help to see available commands, or /start to begin the full workflow from Phase 1.",
+  "rubric": {
+    "activationPrompt": "After completing all phases and generating PR-ready artifacts, evaluate the quality of the output.",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "sop_coverage": {
+          "type": "number",
+          "description": "Fraction of CS alerts that have a corresponding ops-sop runbook (1-5)"
+        },
+        "rule_correctness": {
+          "type": "number",
+          "description": "PrometheusRules pass promtool check and use correct label selectors (1-5)"
+        },
+        "runbook_url_integrity": {
+          "type": "number",
+          "description": "All runbook_url fields in transformed rules point to real ops-sop paths (1-5)"
+        },
+        "dynatrace_references_removed": {
+          "type": "number",
+          "description": "No Dynatrace dashboard URLs or DT-specific labels remain in any output (1-5)"
+        },
+        "pr_readiness": {
+          "type": "number",
+          "description": "Branch, commit message, and PR description are correct and complete (1-5)"
+        }
+      },
+      "required": [
+        "sop_coverage",
+        "rule_correctness",
+        "runbook_url_integrity",
+        "dynatrace_references_removed",
+        "pr_readiness"
+      ]
+    }
+  }
+}
